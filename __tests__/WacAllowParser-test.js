@@ -56,6 +56,20 @@ describe('WacAllowParser', () => {
           public: new Set(),
         });
       });
+      
+      test('parses permissions without quotes separated by commas', () => {
+        expect(parser.parseString('user=read, write, append')).toEqual({
+          user: new Set(['read', 'write', 'append']),
+          public: new Set(),
+        });
+      });
+      
+      test('parses permissions without quotes separated by commas without spaces', () => {
+        expect(parser.parseString('user=read,write,append')).toEqual({
+          user: new Set(['read', 'write', 'append']),
+          public: new Set(),
+        });
+      });
 
       test('parses two users with multiple permissions', () => {
         expect(parser.parseString('user="read write append",public="read append"')).toEqual({
